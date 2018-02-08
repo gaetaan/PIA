@@ -21,16 +21,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Accueil</a>
-                    <a class="nav-item nav-link active" href="#">Catalogue</a>
-                    <a class="nav-item nav-link active" href="#">Mon Compte</a>
+                    <a class="nav-item nav-link active" href="index.php">Accueil</a>
+                    <a class="nav-item nav-link active" href="catalogue.php">Catalogue</a>
+                    <a class="nav-item nav-link active" href="connexion.php">Mon Compte</a>
                 </div>
             </div>
         </nav>
 
         <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
         </form>
 
     </nav>
