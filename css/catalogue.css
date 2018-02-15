@@ -1,3 +1,51 @@
 body{
-    background-color: darkgray;
+    /*
+        background-color: darkgrey;
+     */
+}
+
+.container {
+   /*
+        background-color: darkgrey;
+    */
+}
+
+#catalogue {
+
+}
+
+#nav-header{
+    float: left;
+    background-color: grey;
+}
+
+#nav-header ul {
+    list-style: none;
+}
+
+#nav-header ul li{
+    float: left;
+    display: inline-block;
+}
+
+#nav-header ul li a{
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 20px;
+
+    text-decoration: none;
+    color: #444;
+}
+
+#search-games{
+    display: inline-block;
+}
+
+#nav-search-games{
+    width: 100px;
+    background-color: black;
+}
+
+#search-games-list{
+    background-color: white;
 }
