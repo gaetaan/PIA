@@ -1,51 +1,74 @@
-body{
-    /*
-        background-color: darkgrey;
-     */
-}
-
-.container {
-   /*
-        background-color: darkgrey;
-    */
-}
-
-#catalogue {
-
-}
-
 #nav-header{
-    float: left;
     background-color: grey;
+    margin-bottom: 20px;
 }
 
 #nav-header ul {
     list-style: none;
+    display: inline-block;
 }
 
 #nav-header ul li{
-    float: left;
+    padding-top: 13px;
     display: inline-block;
+}
+
+#nav-header #nav-header-search-bar{
+    margin-top: 10px;
+}
+
+#nav-header #nav-header-search-bar #recherche-bar{
+    margin-top: 10px;
+    paggind-top: 0;
+    border-radius: 5px;
+    height: 35px;
+    width: 200px;
+    font-size: 20px;
 }
 
 #nav-header ul li a{
     text-transform: uppercase;
     font-weight: bold;
     margin-right: 20px;
-
     text-decoration: none;
     color: #444;
 }
 
-#search-games{
-    display: inline-block;
+#nav-header ul li a:hover{
+    color: #ffffff;
 }
 
-#nav-search-games{
-    width: 100px;
-    background-color: black;
+#catalogue .nav-search-games{
+    margin-left: -20px;
 }
 
-#search-games-list{
-    background-color: white;
+#catalogue .nav-search-games ul {
+    list-style: none;
+}
+
+#catalogue .nav-search-games ul li h5{
+    font-weight: bold;
+    text-decoration: underline;
+    color: #444;
+
+}
+
+#catalogue .nav-search-games ul li a{
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    color: #444;
+}
+
+#catalogue .card .card-block, #catalogue .card .card-text{
+    margin-left: 10px;
+}
+
+#catalogue .card .btn-primary{
+    margin-bottom: 10px;
+}
+
+#catalogue .card.empty{
+    border: none;
+    background-color: darkgrey;
 }
