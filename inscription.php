@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: gaetanbarbaria
- * Date: 08/02/2018
- * Time: 13:49
+ * Date: 08/03/2018
+ * Time: 11:18
  */
 
 session_start();
@@ -38,7 +38,7 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
 
 
             // on fait maintenant la requête dans la base de données pour rechercher si ces données existe et correspondent:
-             //si vous avez enregistré le mot de passe en md5() il vous suffira de faire la vérification en mettant mdp = '".md5($MotDePasse)."' au lieu de mdp = '".$MotDePasse."'
+            //si vous avez enregistré le mot de passe en md5() il vous suffira de faire la vérification en mettant mdp = '".md5($MotDePasse)."' au lieu de mdp = '".$MotDePasse."'
 
             $sqlRequete = "SELECT * FROM users WHERE user_mail = '".$mail."' AND user_password = '".$MotDePasse."'";
 
@@ -141,18 +141,24 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
 </head>
 <body>
 <?php require("header.php"); ?>
+
 <div class="login">
-    <h1>Se connecter</h1>
+    <h1>Inscription</h1>
     <form method="post">
+        <input type="text" name="nom" placeholder="Nom" required="required" />
+        <input type="text" name="prenom" placeholder="Prénom" required="required" />
+
         <input type="email" name="mail" placeholder="Adresse mail" required="required" />
         <input type="password" name="mdp" placeholder="Mot de passe" required="required" />
+        <input type="password" name="mdp2" placeholder="Vérifiez le Mot de passe" required="required" />
+
+
         <button type="submit" name="connexion" class="btn btn-primary btn-block btn-large">Connexion</button>
     </form>
     <br>
-    <p style="color: #fff; width: 500px;">Vous n'etes pas encore client chez nous ? <br> Inscrivez-vous <a href="inscription.php" >ici</a> </p>
 </div>
-    <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
-    <script >/*
+<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+<script >/*
 
     I built this login form to block the front end of most of my freelance wordpress projects during the development stage.
 
@@ -161,7 +167,6 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
     Nice and Simple
 
     */
-        //# sourceURL=pen.js
-    </script>
-    </body>
-</html>
+    //# sourceURL=pen.js
+</script>
+</body>

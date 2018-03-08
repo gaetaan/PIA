@@ -23,7 +23,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link active" href="index.php">Accueil</a>
                     <a class="nav-item nav-link active" href="catalogue.php">Catalogue</a>
-                    <a class="nav-item nav-link active" href="connexion.php">Mon Compte</a>
+                    <a class="nav-item nav-link active" href="monCompte.php">Mon Compte</a>
                 </div>
             </div>
         </nav>
@@ -40,7 +40,7 @@
                         <li><a href="#"><i class="icon-cog"></i> Preferences</a></li>
                         <li><a href="#"><i class="icon-envelope"></i> Contact Support</a></li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="icon-off"></i> Logout</a></li>
+                        <li><a href="deconnexion.php"><i class="icon-off"></i> Déconnexion</a></li>
                     </ul>
                 </li>
             </ul>
