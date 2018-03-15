@@ -8,62 +8,111 @@
 
 session_start();
 
-if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
+$erreur = null;
+
+if(isset($_POST['inscription'])) { // si le bouton "Connexion" est appuyé
     // on vérifie que le champ "Pseudo" n'est pas vide
     // empty vérifie à la fois si le champ est vide et si le champ existe belle et bien (is set)
+
+
     if(empty($_POST['mail'])) {
-        echo "Le champ mail est vide.";
+        $erreur = "Le champ mail est vide.";
     } else {
-        // on vérifie maintenant si le champ "Mot de passe" n'est pas vide"
-        if(empty($_POST['mdp'])) {
-            echo "Le champ Mot de passe est vide.";
-        } else {
-            // les champs sont bien posté et pas vide, on sécurise les données entrées par le membre:
-            $mail = htmlentities($_POST['mail'], ENT_QUOTES, "ISO-8859-1"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
-            $MotDePasse = htmlentities($_POST['mdp'], ENT_QUOTES, "ISO-8859-1");
 
-            //on se connecte à la base de données:
-            $servername = "localhost";
-            $username = "root";
-            $password = "root";
+        //on se connecte à la base de données:
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
 
-            try {
-                $conn = new PDO("mysql:host=$servername;dbname=PIA", $username, $password);
-                // set the PDO error mode to exception
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                // echo"Connected\n";
-            }catch(PDOException $e) {
-                echo "Erreur de connexion à la base de données: " . $e->getMessage();
-            }
-
-
-            // on fait maintenant la requête dans la base de données pour rechercher si ces données existe et correspondent:
-            //si vous avez enregistré le mot de passe en md5() il vous suffira de faire la vérification en mettant mdp = '".md5($MotDePasse)."' au lieu de mdp = '".$MotDePasse."'
-
-            $sqlRequete = "SELECT * FROM users WHERE user_mail = '".$mail."' AND user_password = '".$MotDePasse."'";
-
-            $Requete = $conn->prepare($sqlRequete);
-
-            $Requete->execute();
-
-            // set the resulting array to associative
-            $resultat = $Requete->setFetchMode(PDO::FETCH_ASSOC);
-
-            // si il y a un résultat, $Requete->rowCount() nous donnera alors 1
-            // si $Requete->rowCount() retourne 0 c'est qu'il a trouvé aucun résultat
-            if($Requete->rowCount() == 0) {
-                echo "Le pseudo ou le mot de passe est incorrect, le compte n'a pas été trouvé.";
-            } else {
-                // on ouvre la session avec $_SESSION:
-                $_SESSION['mail'] = $mail;
-
-                // la session peut être appelée différemment et son contenu aussi peut être autre chose que le pseudo
-                header('Location: monCompte.php');
-                exit();
-            }
-
+        try {
+            $conn = new PDO("mysql:host=$servername;dbname=PIA", $username, $password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // echo"Connected\n";
+        }catch(PDOException $e) {
+            echo "Erreur de connexion à la base de données: " . $e->getMessage();
         }
+
+        $deja_inscrit = "SELECT * FROM users WHERE user_mail = '".htmlspecialchars($_POST['mail'], ENT_QUOTES, "ISO-8859-1")."'";
+
+        $requete = $conn->prepare($deja_inscrit);
+
+        try {
+            $requete->execute();
+        }catch(PDOException $e) {
+            echo "Erreur de recherche si le compte existe deja: " . $e->getMessage();
+        }
+
+        // on vérifie maintenant si le champ "Mot de passe" n'est pas vide"
+        if($requete->rowCount() != 0){
+            $erreur = "Un compte avec cet adresse mail existe déjà.";
+        }
+        else{
+
+            $mdp = htmlspecialchars($_POST['mdp'], ENT_QUOTES, "ISO-8859-1");
+
+            if(empty($_POST['mdp']) || strlen($mdp) < 5) {
+                if(empty($_POST['mdp']))
+                    $erreur = "Le champ Mot de passe est vide.";
+                else{
+                    $erreur = "Le mot de passe doit contenir au moins 5 caractères. (" . strlen($mdp) . ")";
+                }
+            } else {
+                if($_POST['mdp2'] != $_POST['mdp']){
+                    $erreur = "Les mots de passes sont differents.";
+                }
+                else{
+
+                    if((strlen($_POST["tel"]) < 10 || strlen($_POST["tel"]) > 10) && intval($_POST['tel']) > 0){
+                        $erreur = "Le numero de téléphone doit contenir 10 chiffres.";
+                    }
+                    else{
+                        // les champs sont bien posté et pas vide, on sécurise les données entrées par le membre:
+                        $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, "ISO-8859-1");
+                        $prenom = htmlspecialchars($_POST['prenom'], ENT_QUOTES, "ISO-8859-1");
+                        $mail = htmlspecialchars($_POST['mail'], ENT_QUOTES, "ISO-8859-1");
+                        $mdp = md5(htmlspecialchars($_POST['mdp'], ENT_QUOTES, "ISO-8859-1"));
+                        $tel = intval($_POST);
+                        $sexe = $_POST['sexe'];
+                        $adr = htmlspecialchars($_POST['adresse'], ENT_QUOTES, "ISO-8859-1");
+                        $date = date($_POST['date']);
+
+                        var_dump($nom);
+                        var_dump($prenom);
+                        var_dump($mail);
+                        var_dump($mdp);
+                        var_dump($tel);
+                        var_dump($sexe);
+                        var_dump($adr);
+                        var_dump($date);
+
+                        // on fait maintenant la requête dans la base de données pour rechercher si ces données existe et correspondent:
+                        //si vous avez enregistré le mot de passe en md5() il vous suffira de faire la vérification en mettant mdp = '".md5($MotDePasse)."' au lieu de mdp = '".$MotDePasse."'
+                        try {
+                            $sqlRequete = "INSERT INTO users (user_name, user_firstname, user_mail, user_password, user_phone_number, user_adress, user_birthdate, is_admin, user_gender, malus, malus_date)".
+                                           "VALUE ('".$nom."', '".$prenom."', '".$mail."', '".$mdp."', '".$tel."', '".$adr."', '".$date."', 0, '".$sexe."', 0, '0000-00-00');";
+
+                            $Requete = $conn->prepare($sqlRequete);
+
+                            $Requete->execute();
+                            $_SESSION['mail'] = $mail;
+                            $_SESSION['is_admin'] = 0;
+
+                            header('Location: monCompte.php');
+                            exit();
+
+                        }catch(PDOException $e){
+                            echo "Erreur d'execution de la requète " . $e->getMessage();
+                        }
+
+                    }
+                }
+
+            }
+        }
+
     }
+
 }
 
 
@@ -77,85 +126,38 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
     <link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
     <link rel="canonical" href="https://codepen.io/frytyler/pen/EGdtg" />
 
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
-    <style class="cp-pen-styles">@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-        .btn { display: inline-block; *display: inline; *zoom: 1; padding: 4px 10px 4px; margin-bottom: 0; font-size: 13px; line-height: 18px; color: #333333; text-align: center;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-color: #f5f5f5; background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6); background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6)); background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6); background-image: -o-linear-gradient(top, #ffffff, #e6e6e6); background-image: linear-gradient(top, #ffffff, #e6e6e6); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0); border-color: #e6e6e6 #e6e6e6 #e6e6e6; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); border: 1px solid #e6e6e6; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); cursor: pointer; *margin-left: .3em; }
-        .btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] { background-color: #e6e6e6; }
-        .btn-large { padding: 9px 14px; font-size: 15px; line-height: normal; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
-        .btn:hover { color: #333333; text-decoration: none; background-color: #e6e6e6; background-position: 0 -15px; -webkit-transition: background-position 0.1s linear; -moz-transition: background-position 0.1s linear; -ms-transition: background-position 0.1s linear; -o-transition: background-position 0.1s linear; transition: background-position 0.1s linear; }
-        .btn-primary, .btn-primary:hover { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); color: #ffffff; }
-        .btn-primary.active { color: rgba(255, 255, 255, 0.75); }
-        .btn-primary { background-color: #4a77d4; background-image: -moz-linear-gradient(top, #6eb6de, #4a77d4); background-image: -ms-linear-gradient(top, #6eb6de, #4a77d4); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6eb6de), to(#4a77d4)); background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4); background-image: -o-linear-gradient(top, #6eb6de, #4a77d4); background-image: linear-gradient(top, #6eb6de, #4a77d4); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#6eb6de, endColorstr=#4a77d4, GradientType=0);  border: 1px solid #3762bc; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5); }
-        .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] { filter: none; background-color: #4a77d4; }
-        .btn-block { width: 100%; display:block; }
-
-        * { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; }
-
-        html { width: 100%; height:100%; overflow:hidden; }
-
-        body {
-            width: 100%;
-            height:100%;
-            font-family: 'Open Sans', sans-serif;
-            background: #092756;
-            background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
-            background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-            background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-            background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-            background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
-        }
-        .login {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -150px 0 0 -150px;
-            width:300px;
-            height:300px;
-        }
-        .login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
-
-        input {
-            width: 100%;
-            margin-bottom: 10px;
-            background: rgba(0,0,0,0.3);
-            border: none;
-            outline: none;
-            padding: 10px;
-            font-size: 13px;
-            color: #fff;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-            border: 1px solid rgba(0,0,0,0.3);
-            border-radius: 4px;
-            box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
-            -webkit-transition: box-shadow .5s ease;
-            -moz-transition: box-shadow .5s ease;
-            -o-transition: box-shadow .5s ease;
-            -ms-transition: box-shadow .5s ease;
-            transition: box-shadow .5s ease;
-        }
-        input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
-    </style>
+    <!--link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script-->
+    <link href="css/connexion.css" rel="stylesheet">
 
     <?php require("head.php"); ?>
 </head>
 <body>
 <?php require("header.php"); ?>
 
+<?php if($erreur != null)echo '<p style="color: red;">'. $erreur .'</p>' ?>
+
 <div class="login">
     <h1>Inscription</h1>
     <form method="post">
+
         <input type="text" name="nom" placeholder="Nom" required="required" />
         <input type="text" name="prenom" placeholder="Prénom" required="required" />
-
+        <select name="sexe">
+            <option value="H">Homme</option>
+            <option value="F">Femme</option>
+        </select>
         <input type="email" name="mail" placeholder="Adresse mail" required="required" />
         <input type="password" name="mdp" placeholder="Mot de passe" required="required" />
         <input type="password" name="mdp2" placeholder="Vérifiez le Mot de passe" required="required" />
+        <input type="number" name="tel" placeholder="Numero de téléphone" required="required" />
+        <input type="text" name="adresse" placeholder="Adresse postal" required="required" />
+        <input type="date" name="date" placeholder="Date d'anniversaire" required="required" />
 
 
-        <button type="submit" name="connexion" class="btn btn-primary btn-block btn-large">Connexion</button>
+        <button type="submit" name="inscription" class="btn btn-primary btn-block btn-large">S'inscrire</button>
     </form>
     <br>
+
 </div>
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script >/*
