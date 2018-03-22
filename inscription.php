@@ -8,44 +8,29 @@
 
 session_start();
 
-$erreur = null;
+require("DatabaseLinkInstance.php");
 
-if(isset($_POST['inscription'])) { // si le bouton "Connexion" est appuyé
-    // on vérifie que le champ "Pseudo" n'est pas vide
-    // empty vérifie à la fois si le champ est vide et si le champ existe belle et bien (is set)
+function verifyInput($var){
+    $var = trim($var);
+    $var = stripcslashes($var);
+    $var = htmlentities($var);
+    $var = htmlspecialchars($var);
+    return $var;
+}
 
+
+if(isset($_POST['inscription'])) {
 
     if(empty($_POST['mail'])) {
         $erreur = "Le champ mail est vide.";
     } else {
 
-        //on se connecte à la base de données:
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=PIA", $username, $password);
-            // set the PDO error mode to exception
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // echo"Connected\n";
-        }catch(PDOException $e) {
-            echo "Erreur de connexion à la base de données: " . $e->getMessage();
-        }
-
         $deja_inscrit = "SELECT * FROM users WHERE user_mail = '".htmlspecialchars($_POST['mail'], ENT_QUOTES, "ISO-8859-1")."'";
 
-        $requete = $conn->prepare($deja_inscrit);
+        $requete = $db->query($deja_inscrit);
 
-        try {
-            $requete->execute();
-        }catch(PDOException $e) {
-            echo "Erreur de recherche si le compte existe deja: " . $e->getMessage();
-        }
-
-        // on vérifie maintenant si le champ "Mot de passe" n'est pas vide"
-        if($requete->rowCount() != 0){
-            $erreur = "Un compte avec cet adresse mail existe déjà.";
+        if(count($requete) != 0){
+            $erreur = "Un compte avec cet adresse mail existe déjà.(".count($requete).")";
         }
         else{
 
@@ -63,47 +48,33 @@ if(isset($_POST['inscription'])) { // si le bouton "Connexion" est appuyé
                 }
                 else{
 
-                    if((strlen($_POST["tel"]) < 10 || strlen($_POST["tel"]) > 10) && intval($_POST['tel']) > 0){
+                    if((strlen($_POST["tel"]) != 10) && intval($_POST['tel']) > 0){
                         $erreur = "Le numero de téléphone doit contenir 10 chiffres.";
                     }
                     else{
                         // les champs sont bien posté et pas vide, on sécurise les données entrées par le membre:
-                        $nom = htmlspecialchars($_POST['nom'], ENT_QUOTES, "ISO-8859-1");
-                        $prenom = htmlspecialchars($_POST['prenom'], ENT_QUOTES, "ISO-8859-1");
-                        $mail = htmlspecialchars($_POST['mail'], ENT_QUOTES, "ISO-8859-1");
-                        $mdp = md5(htmlspecialchars($_POST['mdp'], ENT_QUOTES, "ISO-8859-1"));
-                        $tel = intval($_POST);
+                        $nom = verifyInput($_POST['nom']);
+                        $prenom = verifyInput($_POST['prenom']);
+                        $mail = verifyInput($_POST['mail']);
+                        $mdp = md5(verifyInput($_POST['mdp']));
+                        $tel = intval($_POST['tel']);
                         $sexe = $_POST['sexe'];
-                        $adr = htmlspecialchars($_POST['adresse'], ENT_QUOTES, "ISO-8859-1");
+                        $adr = verifyInput($_POST['adresse']);
                         $date = date($_POST['date']);
-
-                        var_dump($nom);
-                        var_dump($prenom);
-                        var_dump($mail);
-                        var_dump($mdp);
-                        var_dump($tel);
-                        var_dump($sexe);
-                        var_dump($adr);
-                        var_dump($date);
 
                         // on fait maintenant la requête dans la base de données pour rechercher si ces données existe et correspondent:
                         //si vous avez enregistré le mot de passe en md5() il vous suffira de faire la vérification en mettant mdp = '".md5($MotDePasse)."' au lieu de mdp = '".$MotDePasse."'
-                        try {
+
                             $sqlRequete = "INSERT INTO users (user_name, user_firstname, user_mail, user_password, user_phone_number, user_adress, user_birthdate, is_admin, user_gender, malus, malus_date)".
                                            "VALUE ('".$nom."', '".$prenom."', '".$mail."', '".$mdp."', '".$tel."', '".$adr."', '".$date."', 0, '".$sexe."', 0, '0000-00-00');";
 
-                            $Requete = $conn->prepare($sqlRequete);
+                            $Requete = $db->query($sqlRequete);
 
-                            $Requete->execute();
                             $_SESSION['mail'] = $mail;
                             $_SESSION['is_admin'] = 0;
 
                             header('Location: monCompte.php');
                             exit();
-
-                        }catch(PDOException $e){
-                            echo "Erreur d'execution de la requète " . $e->getMessage();
-                        }
 
                     }
                 }

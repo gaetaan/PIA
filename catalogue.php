@@ -13,40 +13,11 @@
 
     session_start();
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
+    require("DatabaseLinkInstance.php");
 
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=PIA", $username, $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-       // echo"Connected\n";
-    }catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
+    $sql = "Select * from games";
 
-    try {
-        $sql = "Select * from games";
-
-        $stmt = $conn->prepare("Select * from games");
-
-        $stmt->execute();
-
-        // set the resulting array to associative
-        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-        /*
-        while( $rep = $stmt->fetch() ) {
-            var_dump($rep);
-        }
-        */
-    }catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
-
-    /**/
-    $conn = null;
+    $stmt = $db->query("Select * from games");
 
     function tronquer($description)
     {
@@ -161,7 +132,7 @@
                     <div class="col-md-10">
                         <?php
                             $numberOfGames = 0;
-                            while( $rep = $stmt->fetch()) {
+                            foreach( $stmt as $rep ) {
                                 ?>
                         <?php if(($numberOfGames % 3) == 0) echo"<div class=\"card-deck\">"; ?>
                             <!--div class="card-deck"-->
@@ -213,7 +184,6 @@
         </div>
 
     </div>
-
 
 
 

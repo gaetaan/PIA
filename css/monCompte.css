@@ -2,6 +2,33 @@ body{
     background-color: #6eb6de;
 }
 
+.nav li{
+    background: white;
+    border-radius : 3px;
+    margin-right: 10px;
+}
+
+.nav li a{
+    padding-left:10px;
+    margin-right: 20px;
+}
+
+.nav.nav-tabs{
+    margin-bottom : 8px;
+}
+
+.tab-pane h2{
+    text-underline: #4a77d4;
+}
+
 .form .row .col-xs-6 label{
-color: white;
+    color: white;
+}
+
+.form-group .col-xs-6{
+    margin-left: 8px;
+}
+
+.form-group input{
+    width: 350px;
 }
