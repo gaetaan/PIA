@@ -17,7 +17,7 @@
 
     $sql = "Select * from games";
 
-    $stmt = $db->query("Select * from games");
+    $stmt = $db->query($sql);
 
     function tronquer($description)
     {
@@ -150,7 +150,7 @@
                                             ?>
                                         </p>
                                         <p class="card-text"><small class="text-muted"><?php echo $rep["game_release_date"]; ?></small></p>
-                                        <a href="#" class="btn btn-primary">Voir la fiche du jeu.</a>
+                                        <a href=<?php echo "ficheJeu.php?id=".$rep['id_game']; ?> class="btn btn-primary">Voir la fiche du jeu.</a>
                                     </div>
                                 </div>
                                 <?php //} ?>

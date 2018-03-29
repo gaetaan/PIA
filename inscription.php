@@ -82,6 +82,8 @@ if(isset($_POST['inscription'])) {
             }
         }
 
+        $_POST['mail'] = "";
+
     }
 
 }
@@ -105,7 +107,7 @@ if(isset($_POST['inscription'])) {
 <body>
 <?php require("header.php"); ?>
 
-<?php if($erreur != null)echo '<p style="color: red;">'. $erreur .'</p>' ?>
+<?php if($erreur != null)echo '<br><p style="color: red; text-align: center;">'. $erreur .'</p>' ?>
 
 <div class="login">
     <h1>Inscription</h1>

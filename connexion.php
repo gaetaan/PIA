@@ -42,8 +42,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     $_SESSION['mail'] = $mail;
 
-                    echo "il est admin : " . $Requete['is_admin'];
-
                     header('Location: monCompte.php');
                     exit();
                 }else{
@@ -53,6 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else {
                 $erreur =  "Le pseudo ou le mot de passe est incorrect, le compte n'a pas été trouvé.";
             }
+            $_POST["mdp"] = "";
         }
     }
 }
@@ -72,7 +71,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
     <link href="css/connexion.css" rel="stylesheet">
 
-
     <?php require("head.php"); ?>
 </head>
 <body>
@@ -81,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <div class="login">
     <h1>Se connecter</h1>
 
-    <form id="myForm" method="post" action="" target="myFrame">
+    <form id="myForm" method="post" action="">
         <input type="email" id="mail" name="mail" placeholder="Adresse mail" required="required" />
         <input type="password" id="mdp" name="mdp" placeholder="Mot de passe" required="required" />
         <button type="submit" onclick="sendForm()" name="connexion" class="btn btn-primary btn-block btn-large">Connexion</button>

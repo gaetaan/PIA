@@ -34,11 +34,8 @@
         }
     }
 
-
-
     $sqlRequeteJeuxPosseder = "SELECT * FROM borrowing, games WHERE id_user = '".$_SESSION["id_user"]."' AND borrowing.id_game = games.id_game";
     $requeteJeuxPosseder = $db->query($sqlRequeteJeuxPosseder);
-
 
     $sqlRequeteAbonnement = "SELECT * FROM subscribers Subs, subscription Subn, borrowing B  WHERE Subs.id_user = B.id_user AND Subs.subscription_name = Subn.subscription_name";
     $RequeteAbonnement = $db->query($sqlRequeteAbonnement);
