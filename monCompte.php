@@ -45,9 +45,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
-
     <?php require("head.php"); ?>
-
     <link href="css/monCompte.css" rel="stylesheet">
 
     <title>Mon Compte</title>
@@ -343,11 +341,27 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <label for="adr" ><h4><u>Adresse:</u></h4></label>
+                                    <input type="text" class="form-control" name="adr" id="adr" placeholder=<?php echo '"' . $_SESSION['user_adress'] .'"' ?> title="Inserer le numéro de téléphone">
+                                </div>
+                            </div>
+
+                            <!--div class="form-group">
+                                <div class="col-xs-6">
+                                    <label for="email" ><h4><u>Email :</u></h4></label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder=<?php echo '"' . $_SESSION['mail'] .'"' ?> title="inserer l'email">
+                                </div>
+                            </div-->
+                        </div>
+
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <br>
                                 <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Sauvegarder</button>
-                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Restaurer</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat" ></i> Restaurer</button>
                             </div>
                         </div>
                     </form>

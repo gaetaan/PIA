@@ -1,0 +1,21 @@
+body{
+    background-color: yellow;
+}
+
+dt{
+    color: #3c3d41;
+    font-size: 30px;
+}
+
+dd{
+    color: black;
+    font-weight: bold;
+
+}
+
+dl{
+    text-align: center;
+    border: groove black;
+    padding: 3px;
+    background-color: white;
+}

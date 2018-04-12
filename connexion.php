@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     $_SESSION['mail'] = $mail;
 
-                    header('Location: monCompte.php');
+                    header('Location: MonCompteBis.php');
                     exit();
                 }else{
                     $erreur = "Le mot de passe n'est pas valide.";

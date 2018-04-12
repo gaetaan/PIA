@@ -15,6 +15,10 @@
 
     require("DatabaseLinkInstance.php");
 
+    $sqlTop3 = "SELECT * FROM borrowing B , games G WHERE B.id_game = G.id_game GROUP BY B.id_game ORDER BY B.id_game DESC";
+
+    $resultsqlTop3 = $db->query($sqlTop3);
+
     $sql = "Select * from games";
 
     $stmt = $db->query($sql);
@@ -58,45 +62,31 @@
         <div id="top-3-best">
 
             <div class="card-deck">
-
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Titre du jeu.</h5>
-                        <img src="" />
-                        <br/><br/>
-                        <a href="#" class="btn btn-primary">Voir la fiche du jeu.</a>
-                    </div>
-                </div>
-
-                <br/>
-
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Titre du jeu.</h5>
-                        <img src="" />
-                        <br/><br/>
-                        <a href="#" class="btn btn-primary">Voir la fiche du jeu.</a>
-                    </div>
-                </div>
-
-                <br/>
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Titre du jeu.</h5>
-                        <img src="" />
-                        <br/><br/>
-                        <a href="#" class="btn btn-primary">Voir la fiche du jeu.</a>
-                    </div>
-                </div>
-
-                <br/>
+                <?php
+                    $nbJeux = 0;
+                    foreach ($resultsqlTop3 as $result) {
+                        if($nbJeux < 3) {
+                            ?>
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $result['game_title']; ?></h5>
+                                    <img src=""/>
+                                    <br/><br/>
+                                    <a href="<?php echo "ficheJeu.php?id=".$result['id_game']; ?>"  class="btn btn-primary">Voir la fiche du jeu.</a>
+                                </div>
+                            </div>
+                            <br>
+                            <?php
+                            $nbJeux++;
+                        }
+                    }?>
             </div>
 
         </div>
 
-        <br/>
+        <br>
 
-        <div id="catalogue">
+        <div id="catalogue" class="container">
             <nav id="nav-header" class="col-md-12">
                 <ul>
                     <li><a href="#">Ps4</a></li>
@@ -136,10 +126,7 @@
                                 ?>
                         <?php if(($numberOfGames % 3) == 0) echo"<div class=\"card-deck\">"; ?>
                             <!--div class="card-deck"-->
-                                <?php //for($j = 0; $j < 3; $j++){ ?>
-                                <?php //while( $rep = $stmt->fetch() ) {?>
-                                <div class="card">
-                                    <img class="card-img-top" src="" alt="Card image cap">
+                                <div class="card" style="width: 300px;">
                                     <div class="card-block">
                                         <h4 class="card-title"><?php echo $rep['game_title']; ?></h4>
                                         <p class="card-text">
@@ -149,6 +136,7 @@
                                                 echo $desc;
                                             ?>
                                         </p>
+                                        <p class="card-text"><small class="text-muted"><?php echo $rep["game_plat"]; ?></small></p>
                                         <p class="card-text"><small class="text-muted"><?php echo $rep["game_release_date"]; ?></small></p>
                                         <a href=<?php echo "ficheJeu.php?id=".$rep['id_game']; ?> class="btn btn-primary">Voir la fiche du jeu.</a>
                                     </div>
@@ -185,6 +173,8 @@
 
     </div>
 
+
+    <br>
 
 
     <?php require("footer.php"); ?>

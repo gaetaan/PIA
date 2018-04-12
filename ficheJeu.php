@@ -18,23 +18,115 @@
         return $var;
     }
 
-    $sql = "select * from games where id_game = ".verifyInput($_GET['id_game']);
+    $id_game = verifyInput($_GET['id']);
 
-    $stmt = $db->query($sql);
+    $sql = "select * from games where id_game=" . $id_game . " ";
+
+    $Requete = $db->query($sql);
 
     if(count($Requete) > 0){
         foreach ($Requete as $infos) {
-            $_SESSION['id_user'] = $infos['id_user'];
-            $_SESSION['user_name'] = $infos['user_name'];
-            $_SESSION['user_firstname'] = $infos['user_firstname'];
-            $_SESSION['user_phone_number'] = $infos['user_phone_number'];
-            $_SESSION['user_adress'] = $infos['user_adress'];
-            $_SESSION['user_birthdate'] = $infos['user_birthdate'];
-            $_SESSION['is_admin'] = $infos['is_admin'];
-            $_SESSION['user_gender'] = $infos['user_gender'];
-            $_SESSION['malus'] = $infos['malus'];
-            $_SESSION['malus_date'] = $infos['malus_date'];
+            $title = $infos['game_title'];
+            $release_date = $infos['game_release_date'];
+            $dev = $infos['game_developers'];
+
+            $editor = $infos['game_editor'];
+            if( $editor == NULL) $editor = $dev;
+
+            $pegi = $infos['age_type'];
+            $type = $infos['type_game'];
+            $platform = $infos['game_plat'];
+            $stock = $infos['stock'];
+            $description = $infos['game_description'];
+
         }
     }else{
-        print("<br>Pas de jeux avec cet id!<br>");
+        $erreur = "Pas de jeux avec cet id!";
     }
+
+?>
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <?php require("head.php"); ?>
+
+    <link href="css/monCompte.css" rel="stylesheet">
+
+    <title>Fiche jeu</title>
+</head>
+<body>
+
+<?php require("header.php"); ?>
+
+<?php
+    if(isset($erreur)) echo $erreur;
+    else{
+?>
+
+        <br>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <h2><?php echo $title;?></h2>
+                    <br>
+                    <?php
+
+                    $titre = strtoupper($title);
+                    $titre_dec = str_replace(" ", "_", $titre);
+                    $platf = $platform;
+                    $image = $titre_dec."_".$platf.".jpeg";
+                    //echo "\"images/".$image."\"";
+                    ?>
+                    <img style="width: 300px;" class="img-responsive" src= <?php echo "\"images/".$image."\""?> alt="CouvertureJeu">
+
+                    <h4>Plateforme: </h4>
+                    <p><?php echo  $platform; ?></p>
+                </div>
+                <div class="col-md-8 ">
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: 15px; margin-right: 10px;"><h4>Developpeurs: </h4></div>
+                        <div class="col-xs-6"><p style="font-size: 22px;" ><?php echo $dev; ?></p></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: 15px; margin-right: 10px;"><h4>Éditeur: </h4></div>
+                        <div class="col-xs-6"><p style="font-size: 22px;" ><?php echo $editor; ?></p></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: 15px; margin-right: 10px;"><h4>Pegi: </h4></div>
+                        <div class="col-xs-6"><p style="font-size: 22px;" ><?php echo $pegi; ?></p></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: 15px; margin-right: 10px;"><h4>Type de jeu: </h4></div>
+                        <div class="col-xs-6"><p style="font-size: 22px;" ><?php echo $type; ?></p></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: 15px; margin-right: 10px;"><h4>Date de sortie: </h4></div>
+                        <div class="col-xs-6"><p style="font-size: 22px;" ><?php echo $release_date; ?></p></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: 15px; margin-right: 10px;"><h4>En stock: </h4></div>
+                        <div class="col-xs-6"><p style="font-size: 22px;" ><?php echo $stock; ?></p></div>
+                    </div>
+
+                    <h4>Description: </h4>
+                    <p><?php echo $description; ?></p>
+                </div>
+            </div>
+        </div>
+
+
+<?php } ?>
+<?php require("footer.php"); ?>
+
+</body>
+</html>

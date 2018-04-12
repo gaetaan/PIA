@@ -1,0 +1,65 @@
+h1.page-header {
+    margin-top: -5px;
+}
+
+.nav a{
+    text-decoration: none;
+    color : #4a77d4;
+}
+
+.nav a:hover{
+    text-decoration: none;
+    color: rgb(15, 173, 255);
+    border-radius: 10px;
+}
+
+
+.nav p{
+    font-size: 17px;
+}
+
+#nav-Admin p{
+    padding-top: 10px;
+}
+
+#nav-Admin li{
+    margin-left: 10px;
+}
+
+.p-active{
+    padding: 5px;
+    border-radius: 10px;
+    color: #FFFFFF;
+    background: #4a77d4;
+}
+
+.panel{
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.panel-heading{
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.panel-body{
+    margin-top: -10px;
+    padding-top: 20px;
+    margin-left: 50px;
+    margin-right: 10px;
+    border-top: 1px solid grey;
+}
+.panel-body .row .form-group{
+    margin-right: 40px;
+}
+
+.main-container {
+    background: #FFF;
+    padding-top: 15px;
+    margin-top: -20px;
+}
+
+.footer {
+    width: 100%;
+}
