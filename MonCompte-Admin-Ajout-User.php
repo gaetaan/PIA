@@ -117,7 +117,7 @@ if($_SESSION["is_admin"] == 0){
 
                                     <label for="sexe" ><h4><u>Sexe :</u></h4></label>
                                     <select name="sexe" class="form-control">
-                                        <option value="H">Homme</option>
+                                        <option value="M">Homme</option>
                                         <option value="F">Femme</option>
                                     </select>
                                 </div>

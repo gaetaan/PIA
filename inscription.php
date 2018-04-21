@@ -116,7 +116,7 @@ if(isset($_POST['inscription'])) {
         <input type="text" name="nom" placeholder="Nom" required="required" />
         <input type="text" name="prenom" placeholder="Prénom" required="required" />
         <select name="sexe">
-            <option value="H">Homme</option>
+            <option value="M">Homme</option>
             <option value="F">Femme</option>
         </select>
         <input type="email" name="mail" placeholder="Adresse mail" required="required" />

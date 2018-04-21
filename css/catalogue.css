@@ -53,11 +53,42 @@
 
 }
 
-#catalogue .nav-search-games ul li a{
+#catalogue .nav-search-games ul li a {
     text-transform: uppercase;
     font-weight: bold;
     text-decoration: none;
     color: #444;
+}
+
+#catalogue .card-title{
+    border-bottom: 1px solid #3c3d41;
+    margin-right : 20px;
+    text-align: center;
+}
+
+#catalogue #title{
+    height: 20%;
+}
+
+#catalogue #desc{
+    margin-top: 5%;
+    height: 50%;
+}
+
+#catalogue #plat{
+    margin-top: 2%;
+    margin-bottom: 20%;
+    height: 10%;
+}
+
+#catalogue #bouton{
+    text-align : center;
+    border-radius: 5px/10px;
+    position: absolute;
+    margin-top: -40px;
+    bottom: 0px;
+    left: 55px;
+
 }
 
 #catalogue .card .card-block, #catalogue .card .card-text{

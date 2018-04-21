@@ -36,25 +36,41 @@
         <dd>
             Conditions générales d'utilisation de find your game!
 
-            est un système permettant la location de jeux vidéos et de consoles de jeux moyennant un abonnement.Cet abonnement couvre la prestation de service suivante : vérification de la qualité des jeux mis dans le circuit de location, mise à la disposition d'un certains nombres de jeux. Ce système est accessible depuis l’adresse Internet http//www.find_your_game.fr.</dd>
+            est un système permettant la location de jeux vidéos et de consoles de jeux moyennant un abonnement.
+            <br>
+            Cet abonnement couvre la prestation de service suivante : vérification de la qualité des jeux mis dans le circuit de location, mise à la disposition d'un certains nombres de jeux.
+            <br>
+            Ce système est accessible depuis l’adresse Internet http//www.find_your_game.fr.
+        </dd>
         <br>
 
 
         <dt><u>Article 2 : Espace personnel / Mon compte</u></dt>
         <dd>
-            L’inscription entraîne la création d'un Espace personnel / Mon compte, ce qui est un préalable indispensable à toute souscription aux services proposés sur le présent site par les internautes. À cette fin, le membre sera invité à fournir un certain nombre d'informations personnelles et exactes. Lors de la création du compte un mot de passe sera demandé à l'utilisateur qui lui permettra de garder sécuriser ses données personnelles.</dd>
+            L’inscription entraîne la création d'un Espace personnel / Mon compte, ce qui est un préalable indispensable à toute souscription aux services proposés sur le présent site par les internautes.
+            <br>
+            À cette fin, le membre sera invité à fournir un certain nombre d'informations personnelles et exactes.
+            <br>
+            Lors de la création du compte un mot de passe sera demandé à l'utilisateur qui lui permettra de garder sécuriser ses données personnelles.
+        </dd>
         <br>
         <dt><u>Article 3 : Malus</u></dt>
-        <dd>Un système de malus est intégré dans le système de location pour éviter les retards de rendu de jeux et les dégradations. Ainsi pour chaque retard de rendu de jeux, le nombre de jeux que pourra louer l'utilisateur sera diminuer de un pour le mois suivant.</dd>
+        <dd>Un système de malus est intégré dans le système de location pour éviter les retards de rendu de jeux et les dégradations.
+            <br>
+            Ainsi pour chaque retard de rendu de jeux, le nombre de jeux que pourra louer l'utilisateur sera diminuer de un pour le mois suivant.</dd>
 
         <br>
 
 
         <dt><u>Article 4 : Abonnement</u></dt>
         <dd>3 différents abonnement seront à la disposition des utilisateurs :
-            - Le petit qui permet de louer 3 jeux par mois pour 5€ par mois.
-            - Le moyen qui permet de louer 5 jeux par mois pour 10€ par mois.
-            - Le grand qui permet de louer 7 jeux par mois pour 15€ par mois.
+            <br>
+            - Le petit qui permet de louer 2 jeux par mois pour 5€ par mois.
+            <br>
+            - Le moyen qui permet de louer 3 jeux par mois pour 7€ par mois.
+            <br>
+            - Le grand qui permet de louer 5 jeux par mois pour 10€ par mois.
+            <br>
             Il sera impossible pour un utilisateur de louer un nombre supérieur de jeux que sont abonnement lui permet, sauf si il change d'abonnement, ce changement pourra être fait en magasin ou en ligne.</dd>
         <br>
         <dt><u>Article 5 : Propriété des jeux</u></dt>

@@ -138,7 +138,7 @@ where game_plat = '".$plat."' GROUP BY id_game  ORDER BY nombre DESC";
                         <!-- PRICE ITEM -->
                         <div class="panel price panel-red">
                             <div class="panel-heading  text-center">
-                                <h3>Noob</h3>
+                                <h3>Petit</h3>
                             </div>
                             <div class="panel-body text-center">
                                 <p class="lead" style="font-size:40px"><strong>5€ / mois</strong></p>
@@ -159,7 +159,7 @@ where game_plat = '".$plat."' GROUP BY id_game  ORDER BY nombre DESC";
                         <!-- PRICE ITEM -->
                         <div class="panel price panel-blue">
                             <div class="panel-heading arrow_box text-center">
-                                <h3>Normal</h3>
+                                <h3>Moyen</h3>
                             </div>
                             <div class="panel-body text-center">
                                 <p class="lead" style="font-size:40px"><strong>7€ / mois</strong></p>
@@ -180,7 +180,7 @@ where game_plat = '".$plat."' GROUP BY id_game  ORDER BY nombre DESC";
                         <!-- PRICE ITEM -->
                         <div class="panel price panel-green">
                             <div class="panel-heading arrow_box text-center">
-                                <h3>Gamer</h3>
+                                <h3>Grand</h3>
                             </div>
                             <div class="panel-body text-center">
                                 <p class="lead" style="font-size:40px"><strong>10€ / mois</strong></p>

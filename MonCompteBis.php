@@ -33,7 +33,7 @@
         }
     }
 
-    $sqlRequeteAbonnement = "SELECT subscription_name FROM subscribers  WHERE date_end_sub is not NULL && id_user = " . $_SESSION['id_user'];
+    $sqlRequeteAbonnement = "SELECT subscription_name FROM subscribers  WHERE date_end_sub is NULL && id_user = " . $_SESSION['id_user'];
     $RequeteAbonnement = $db->query($sqlRequeteAbonnement);
 
     //var_dump($RequeteAbonnement);

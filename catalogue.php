@@ -128,17 +128,24 @@
                             <!--div class="card-deck"-->
                                 <div class="card" style="width: 300px;">
                                     <div class="card-block">
-                                        <h4 class="card-title"><?php echo $rep['game_title']; ?></h4>
-                                        <p class="card-text">
-                                            <?php
+                                        <div id="title">
+                                            <h4 class="card-title"><?php echo $rep['game_title']; ?></h4>
+                                        </div>
+                                        <div id="desc">
+                                            <p class="card-text">
+                                                <?php
                                                 $desc = $rep['game_description'];
                                                 $desc = tronquer($desc);
                                                 echo $desc;
-                                            ?>
-                                        </p>
-                                        <p class="card-text"><small class="text-muted"><?php echo $rep["game_plat"]; ?></small></p>
-                                        <p class="card-text"><small class="text-muted"><?php echo $rep["game_release_date"]; ?></small></p>
-                                        <a href=<?php echo "ficheJeu.php?id=".$rep['id_game']; ?> class="btn btn-primary">Voir la fiche du jeu.</a>
+                                                ?>
+                                            </p>
+                                        </div>
+                                        <div id="plat">
+                                            <p class="card-text"><small class="text-muted"><?php echo $rep["game_plat"] . "      " . $rep["game_release_date"];  ?></small></p>
+                                        </div>
+                                        <div id="bouton">
+                                            <a href=<?php echo "ficheJeu.php?id=".$rep['id_game']; ?> class="btn btn-primary">Voir la fiche du jeu.</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <?php //} ?>
